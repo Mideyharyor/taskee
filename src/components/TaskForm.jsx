@@ -60,7 +60,7 @@ function TaskForm({ taskTitle, setTaskTitle, taskList, setTaskList, darkMode }) 
             <form className="space-y-3 sm:space-y-4" onSubmit={handleSubmit}>
                 <div>
                     <label className={`block text-xs font-bold uppercase tracking-widest mb-1.5 ml-1 ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>Task Title</label>
-                    <input autoFocus type="text" value={taskTitle} name={taskTitle} className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-transparent rounded-lg sm:rounded-xl outline-none transition-all focus:border-indigo-500/50 ${darkMode
+                    <input autoFocus type="text" value={taskTitle} name={taskTitle} className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-base border-2 border-transparent rounded-lg sm:rounded-xl outline-none transition-all focus:border-indigo-500/50 ${darkMode
                         ? 'bg-slate-800 text-white focus:bg-slate-700'
                         : 'bg-gray-100 text-gray-900 focus:bg-gray-50'
                         }`} placeholder="e.g., Finalizing portfolio design" onChange={(e) => setTaskTitle(e.target.value)} />
@@ -68,7 +68,7 @@ function TaskForm({ taskTitle, setTaskTitle, taskList, setTaskList, darkMode }) 
 
                 <div>
                     <label className={`block text-xs font-bold uppercase tracking-widest mb-1.5 ml-1 ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>Task Description</label>
-                    <textarea type="text" rows={2} value={taskDescription} name={taskDescription} className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border-2 border-transparent rounded-lg sm:rounded-xl outline-none transition-all resize-none focus:border-indigo-500/50 ${darkMode
+                    <textarea type="text" rows={2} value={taskDescription} name={taskDescription} className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-base border-2 border-transparent rounded-lg sm:rounded-xl outline-none transition-all resize-none focus:border-indigo-500/50 ${darkMode
                         ? 'bg-slate-800 text-white focus:bg-slate-700'
                         : 'bg-gray-100 text-gray-900 focus:bg-gray-50'
                         }`} placeholder="What needs to be done?" onChange={(e) => setTaskDescription(e.target.value)} />
@@ -76,7 +76,7 @@ function TaskForm({ taskTitle, setTaskTitle, taskList, setTaskList, darkMode }) 
 
                 <div>
                     <label className={`block text-xs font-bold uppercase tracking-widest mb-1.5 ml-1 ${darkMode ? 'text-slate-400' : 'text-gray-500'}`}>Category</label>
-                    <select value={category} onChange={(e) => setCategory(e.target.value)} className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg sm:rounded-xl border-2 border-transparent outline-none cursor-pointer transition-all appearance-none focus:border-indigo-500/50 ${darkMode
+                    <select value={category} onChange={(e) => setCategory(e.target.value)} className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-base rounded-lg sm:rounded-xl border-2 border-transparent outline-none cursor-pointer transition-all appearance-none focus:border-indigo-500/50 ${darkMode
                         ? 'bg-slate-800 text-white'
                         : 'bg-gray-100 text-gray-900'
                         }`}>
@@ -95,8 +95,8 @@ function TaskForm({ taskTitle, setTaskTitle, taskList, setTaskList, darkMode }) 
                         type="submit"
                         disabled={!taskTitle.trim()}
                         className={`flex-1 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold text-white transition-all ${!taskTitle.trim()
-                                ? 'bg-indigo-400/50 cursor-not-allowed opacity-50'
-                                : 'bg-[#4f46e5] hover:bg-[#4338ca] shadow-md shadow-indigo-500/10'
+                            ? 'bg-indigo-400/50 cursor-not-allowed opacity-50'
+                            : 'bg-[#4f46e5] hover:bg-[#4338ca] shadow-md shadow-indigo-500/10'
                             }`}
                         onClick={addTask}
                     >
