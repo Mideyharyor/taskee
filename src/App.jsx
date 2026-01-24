@@ -77,7 +77,7 @@ function App() {
   });
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-slate-950' : 'bg-gray-50'} overflow-x-hidden`}>
+    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'bg-slate-950' : 'bg-gray-50'} overflow-x-hidden w-full`}>
       <NavBar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
