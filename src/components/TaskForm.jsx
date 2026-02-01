@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Plus, X } from "lucide-react";
+import { v4 as uuidv4 } from "uuid";
 
 function TaskForm({ taskTitle, setTaskTitle, taskList, setTaskList, darkMode }) {
 
@@ -11,7 +12,7 @@ function TaskForm({ taskTitle, setTaskTitle, taskList, setTaskList, darkMode }) 
 
     const addTask = () => {
         const newTask = {
-            id: taskList.length + 1,
+            id: uuidv4(),
             name: taskTitle,
             description: taskDescription,
             category: category,
