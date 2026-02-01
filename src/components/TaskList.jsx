@@ -2,7 +2,7 @@ import React from "react";
 import TaskItem from "./TaskItem";
 import EmptyState from "./EmptyState";
 
-function TaskList({ taskList, allTasksCount, filter, setFilter, onToggle, onDelete, darkMode }) {
+function TaskList({ taskList, allTasksCount, filter, setFilter, onToggle, onDelete, onEdit, darkMode }) {
     const filters = [
         { id: "all", label: "All" },
         { id: "active", label: "Active" },
@@ -52,6 +52,7 @@ function TaskList({ taskList, allTasksCount, filter, setFilter, onToggle, onDele
                             task={task}
                             onToggle={onToggle}
                             onDelete={onDelete}
+                            onEdit={onEdit}
                             darkMode={darkMode}
                         />
                     ))

@@ -1,7 +1,7 @@
-import { CheckCircle, Circle, Trash2 } from "lucide-react";
+import { CheckCircle, Circle, PencilLine, Trash2 } from "lucide-react";
 import React from "react";
 
-function TaskItem({ task, onToggle, onDelete, darkMode }) {
+function TaskItem({ task, onToggle, onDelete, onEdit, darkMode }) {
     const categoryColors = {
         "Work": "bg-blue-500/10 text-blue-400 border-blue-500/20",
         "Personal": "bg-purple-500/10 text-purple-400 border-purple-500/20",
@@ -55,17 +55,31 @@ function TaskItem({ task, onToggle, onDelete, darkMode }) {
                 )}
             </div>
 
-            {/* Delete Button - Always visible on mobile */}
-            <button
-                onClick={() => onDelete(task.id)}
-                className={`flex-shrink-0 p-1.5 sm:p-2 rounded-lg transition-all sm:opacity-0 sm:group-hover:opacity-100 ${darkMode
-                        ? 'text-slate-600 hover:text-red-400 hover:bg-red-500/10'
-                        : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
-                    }`}
-                aria-label="Delete task"
-            >
-                <Trash2 className="w-4 h-4 sm:w-5 sm:h-5" />
-            </button>
+            <div className="flex items-center gap-1 sm:gap-2">
+                {/* Edit Button - Always visible on mobile */}
+                <button
+                    onClick={() => onEdit(task)}
+                    className={`flex-shrink-0 p-1.5 sm:p-2 rounded-lg transition-all sm:opacity-0 sm:group-hover:opacity-100 ${darkMode
+                            ? 'text-slate-600 hover:text-indigo-400 hover:bg-indigo-500/10'
+                            : 'text-gray-400 hover:text-indigo-500 hover:bg-indigo-50'
+                        }`}
+                    aria-label="Edit task"
+                >
+                    <PencilLine className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+
+                {/* Delete Button - Always visible on mobile */}
+                <button
+                    onClick={() => onDelete(task.id)}
+                    className={`flex-shrink-0 p-1.5 sm:p-2 rounded-lg transition-all sm:opacity-0 sm:group-hover:opacity-100 ${darkMode
+                            ? 'text-slate-600 hover:text-red-400 hover:bg-red-500/10'
+                            : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
+                        }`}
+                    aria-label="Delete task"
+                >
+                    <Trash2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                </button>
+            </div>
         </div>
     )
 }

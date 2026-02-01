@@ -1,14 +1,48 @@
 import React from "react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Plus, X } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 
-function TaskForm({ taskTitle, setTaskTitle, taskList, setTaskList, darkMode }) {
+function TaskForm({
+    taskTitle,
+    setTaskTitle,
+    taskList,
+    setTaskList,
+    darkMode,
+    editingTask,
+    onUpdateTask,
+    onCancelEdit
+}) {
 
     const [taskDescription, setTaskDescription] = useState("");
     const [addTaskOn, setAddTaskOn] = useState(false);
     const [category, setCategory] = useState("Personal");
     const categories = ["Work", "Personal", "Shopping", "Urgent"];
+    const wasEditingRef = useRef(false);
+    const isEditing = Boolean(editingTask);
+
+    const resetForm = () => {
+        setTaskTitle("");
+        setTaskDescription("");
+        setCategory("Personal");
+        setAddTaskOn(false);
+    };
+
+    useEffect(() => {
+        if (editingTask) {
+            wasEditingRef.current = true;
+            setAddTaskOn(true);
+            setTaskTitle(editingTask.name ?? "");
+            setTaskDescription(editingTask.description ?? "");
+            setCategory(editingTask.category ?? "Personal");
+            return;
+        }
+
+        if (wasEditingRef.current) {
+            wasEditingRef.current = false;
+            resetForm();
+        }
+    }, [editingTask, setTaskTitle]);
 
     const addTask = () => {
         const newTask = {
@@ -21,25 +55,40 @@ function TaskForm({ taskTitle, setTaskTitle, taskList, setTaskList, darkMode }) 
         }
 
         setTaskList(prev => [...prev, newTask])
-        setTaskTitle("");
-        setTaskDescription("");
-        setAddTaskOn(false);
-        setCategory("Personal");
+        resetForm();
     }
 
     const cancelTask = () => {
-        setAddTaskOn(false)
-        setTaskTitle("");
-        setTaskDescription("");
-        setCategory("Personal");
+        resetForm();
+        if (isEditing && onCancelEdit) {
+            onCancelEdit();
+        }
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!taskTitle.trim()) {
+            return;
+        }
+
+        if (isEditing && editingTask) {
+            onUpdateTask(editingTask.id, {
+                name: taskTitle,
+                description: taskDescription,
+                category: category
+            });
+            if (onCancelEdit) {
+                onCancelEdit();
+            }
+            resetForm();
+            return;
+        }
+
+        addTask();
     }
 
 
-    if (!addTaskOn) {
+    if (!addTaskOn && !isEditing) {
         return (
             <button className="w-full flex items-center justify-center gap-2 py-3 sm:py-4 mb-4 sm:mb-6 rounded-xl sm:rounded-2xl bg-[#4f46e5] hover:bg-[#4338ca] text-white text-sm sm:text-base font-semibold shadow-lg shadow-indigo-500/20 transition-all active:scale-[0.98]" onClick={() => setAddTaskOn(true)}>
                 <Plus className="w-4 h-4 sm:w-5 sm:h-5" /> Add New Task
@@ -54,7 +103,9 @@ function TaskForm({ taskTitle, setTaskTitle, taskList, setTaskList, darkMode }) 
             : 'bg-white border-gray-200'
             }`}>
             <div className="flex items-center justify-between mb-4">
-                <h2 className={`text-base sm:text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>Create New Task</h2>
+                <h2 className={`text-base sm:text-lg font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+                    {isEditing ? "Edit Task" : "Create New Task"}
+                </h2>
                 <button className={`transition-colors ${darkMode ? 'text-slate-400 hover:text-slate-200' : 'text-gray-400 hover:text-gray-600'}`} onClick={cancelTask}><X className="w-5 h-5" /></button>
             </div>
 
@@ -99,9 +150,8 @@ function TaskForm({ taskTitle, setTaskTitle, taskList, setTaskList, darkMode }) 
                             ? 'bg-indigo-400/50 cursor-not-allowed opacity-50'
                             : 'bg-[#4f46e5] hover:bg-[#4338ca] shadow-md shadow-indigo-500/10'
                             }`}
-                        onClick={addTask}
                     >
-                        Create Task
+                        {isEditing ? "Update Task" : "Create Task"}
                     </button>
                 </div>
             </form>

@@ -8,6 +8,7 @@ function App() {
   const [taskList, setTaskList] = useState([]);
   const [filter, setFilter] = useState("all"); // "all", "active", "completed"
   const [searchQuery, setSearchQuery] = useState("");
+  const [editingTaskId, setEditingTaskId] = useState(null);
   const [darkMode, setDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem('taskee-theme');
     return savedTheme ? savedTheme === 'dark' : true;
@@ -53,7 +54,24 @@ function App() {
 
   const deleteTask = (id) => {
     setTaskList(prev => prev.filter(task => task.id !== id))
+    if (editingTaskId === id) {
+      setEditingTaskId(null);
+    }
   }
+
+  const startEditTask = (task) => {
+    setEditingTaskId(task.id);
+  }
+
+  const cancelEditTask = () => {
+    setEditingTaskId(null);
+  }
+
+  const updateTask = (id, updates) => {
+    setTaskList(prev => prev.map(task => task.id === id ? { ...task, ...updates } : task))
+  }
+
+  const editingTask = taskList.find(task => task.id === editingTaskId) || null;
 
   // Filter and search logic
   const filteredTasks = taskList.filter(task => {
@@ -92,6 +110,9 @@ function App() {
           taskList={taskList}
           setTaskList={setTaskList}
           darkMode={darkMode}
+          editingTask={editingTask}
+          onUpdateTask={updateTask}
+          onCancelEdit={cancelEditTask}
         />
 
         <TaskList
@@ -101,6 +122,7 @@ function App() {
           setFilter={setFilter}
           onToggle={toggleTask}
           onDelete={deleteTask}
+          onEdit={startEditTask}
           darkMode={darkMode}
         />
       </main>
